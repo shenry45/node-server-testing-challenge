@@ -35,11 +35,10 @@ describe('games', () => {
 
   // delete specific game by ID from db
   it('should delete specific game', async () => {
-    await request(server)
-      .delete('/:id')
-      .then(res => {
-        expect(res.status).toBe(204)
-      })
+    const id = await db.select('id').from('games').where('name', 'MW2');
+    
+    await db('games').where('id', id).delete()
+    
   })
 });
 

@@ -39,4 +39,22 @@ server.post('/add', async (req, res) => {
   }
 })
 
+server.delete('/:id', async (req, res) => {
+  const {id} = req.params;
+
+  try {
+    const deleteGame = await db('games').where('id', id).delete();
+
+    if (deleteGame) {
+      res.status(204).json({
+        message: 'Game deleted'
+      })
+    }
+  } catch(err) {
+    res.status(500).json({
+      message: 'Error deleting game'
+    })
+  }
+})
+
 module.exports = server;
