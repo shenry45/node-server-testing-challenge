@@ -16,7 +16,25 @@ server.get('/', async (req, res) => {
     }
   } catch (err) {
     res.status(500).json({
-      message: 'Internal Server Error'
+      message: 'Error getting game list.'
+    })
+  }
+})
+
+server.post('/add', async (req, res) => {
+  const {name} = req.body;
+
+  try {
+    const addGame = await db('games').insert({name});
+
+    if (addGame) {
+      res.status(201).json({
+        message: 'Game added to the library. Thank you.'
+      })
+    }
+  } catch(err) {
+    res.status(500).json({
+      message: 'Error adding new game'
     })
   }
 })
